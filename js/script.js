@@ -1,32 +1,38 @@
-// Create Card
+// ------------------------------------------
+//  Create Card
+// ------------------------------------------
 function createCard(res) {
-  const card = document.createElement('div');
-  const firstName = res.results[0].name.first;
-  const lastName = res.results[0].name.last;
-  const fullName = `${firstName} ${lastName}`;
-  const email = res.results[0].email;
-  const homeCity = res.results[0].location.city;
-  const homeState = res.results[0].location.state;
-  const profilePic = res.results[0].picture.large;
-  card.className = 'card';
-  card.innerHTML = `
-                    <div class="card-img-container">
-                      <img class="card-img" src="${profilePic}" alt="profile picture">
-                    </div>
-                    <div class="card-info-container">
-                      <h3 id="name" class="card-name cap">${fullName}</h3>
-                      <p class="card-text">${email}</p>
-                      <p class="card-text cap">${homeCity}, ${homeState}</p>
-                    </div>
-                    `;
-  document.querySelector('#gallery').append(card);
-  // console.log(res.results[0].picture.thumbnail);
+  for (let i = 0; i < 12; i++) {
+    const card = document.createElement('div');
+    const firstName = res.results[i].name.first;
+    const lastName = res.results[i].name.last;
+    const fullName = `${firstName} ${lastName}`;
+    const email = res.results[i].email;
+    const homeCity = res.results[i].location.city;
+    const homeState = res.results[i].location.state;
+    const profilePic = res.results[i].picture.large;
+    card.className = 'card';
+    card.innerHTML = `
+                      <div class="card-img-container">
+                        <img class="card-img" src="${profilePic}" alt="profile picture">
+                      </div>
+                      <div class="card-info-container">
+                        <h3 id="name" class="card-name cap">${fullName}</h3>
+                        <p class="card-text">${email}</p>
+                        <p class="card-text cap">${homeCity}, ${homeState}</p>
+                      </div>
+                      `;
+    document.querySelector('#gallery').append(card);
+  }
+
 }
 
-
-// Create Modal
-function createModal() {
+// ------------------------------------------
+//  Create Modal
+// ------------------------------------------
+function createModal(res) {
   const modal = document.createElement('div');
+  const card = document.querySelector('#gallery');
   modal.className = 'modal-container';
   modal.innerHTML = `
                     <div class="modal">
@@ -43,10 +49,12 @@ function createModal() {
                       </div>
                     </div>
                     `;
-                    document.querySelector('#gallery').append(modal);  // This is wrong, append somewhere else
+  card.append(modal);  // This is wrong, append somewhere else ??
 }
 
-// Create Search
+// ------------------------------------------
+//  Create Search
+// ------------------------------------------
 function createSearch() {
   const search = document.createElement('form');
   search.action = '#';
@@ -58,24 +66,31 @@ function createSearch() {
   document.querySelector('.search-container').append(search);
 }
 
-// Handle AJAX Request
-for  (let i = 0; i < 12; i++) {
-  fetch('https://randomuser.me/api/')
+// ------------------------------------------
+//  Handle AJAX Request
+// ------------------------------------------
+// for  (let i = 0; i < 12; i++) {
+  fetch('https://randomuser.me/api/?results=12')
     .then(res => res.json())
     .then(res => createCard(res))
-    .catch(error => console.log('There was a problem dawg!', error));
-}
+    .catch(error => console.log('There was a problem dawg!', error))
+    .finally();
+// }
+
+// ------------------------------------------
+//  Card and Modal Interactivity
+// ------------------------------------------
 
 
-// Card and Modal Interactivity
+// $('.modal-container').hide();
+
+// const card = document.getElementsByClassName('card');
+// card.addEventListener('click', () => console.log('Dave Dawg!!'));
+
+$('.card').on('click', () => console.log('Dave Dawg!!'));
+
+// $('#modal-close-btn').on('click', () => {
+//   $('.modal-container').hide();
+// })
+
 createSearch()
-
-$('.modal-container').hide();
-
-$('.card').on('click', () => {
-  $('.modal-container').show();
-})
-
-$('.modal-close-btn').on('click', () => {
-  $('.modal-container').hide();
-})

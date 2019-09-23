@@ -1,15 +1,21 @@
 // Create Card
-function createCard() {
+function createCard(res) {
   const card = document.createElement('div');
+  const firstName = res.results[0].name.first;
+  const lastName = res.results[0].name.last;
+  const fullName = `${firstName} ${lastName}`;
+  const email = res.results[0].email;
+  const homeCity = res.results[0].location.city;
+  const homeState = res.results[0].location.state;
   card.className = 'card';
   card.innerHTML = `
                     <div class="card-img-container">
                       <img class="card-img" src="https://placehold.it/90x90" alt="profile picture">
                     </div>
                     <div class="card-info-container">
-                      <h3 id="name" class="card-name cap">first last</h3>
-                      <p class="card-text">email</p>
-                      <p class="card-text cap">city, state</p>
+                      <h3 id="name" class="card-name cap">${fullName}</h3>
+                      <p class="card-text">${email}</p>
+                      <p class="card-text cap">${homeCity}, ${homeState}</p>
                     </div>
                     `;
   document.querySelector('#gallery').append(card);
@@ -57,13 +63,8 @@ for  (let i = 0; i < 12; i++) {
   fetch('https://randomuser.me/api/')
     .then(res => res.json())
     .then(res => {
-      createCard();
-      const firstName = res.results[0].name.first;
-      const lastName = res.results[0].name.last;
-      const fullName = `${firstName} ${lastName}`;
-      const nameDiv = document.querySelector('#name');
-
-      nameDiv.innerHTML = `${fullName}`;
+      createCard(res);
+      // console.log(res.results[0].location.city)
     })
     .catch(error => console.log('There was a problem dawg!', error));
 }

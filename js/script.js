@@ -35,7 +35,7 @@ function createModal() {
                       </div>
                     </div>
                     `;
-                    document.querySelector('#gallery').append(modal);
+                    document.querySelector('#gallery').append(modal);  // This is wrong, append somewhere else
 }
 
 // Create Search
@@ -48,21 +48,22 @@ function createSearch() {
                     <input type="submit" value="&#x1F50D;" id="serach-submit" class="search-submit">
                     `;
   document.querySelector('.search-container').append(search);
-  console.log(search);
 }
 
 // Handle AJAX Request
+const nameList = [];
+
 for  (let i = 0; i < 12; i++) {
   fetch('https://randomuser.me/api/')
     .then(res => res.json())
     .then(res => {
       createCard();
-      // createModal();
       const firstName = res.results[0].name.first;
       const lastName = res.results[0].name.last;
+      const fullName = `${firstName} ${lastName}`;
       const nameDiv = document.querySelector('#name');
-      console.log(res.results[0].name.first);
-      nameDiv.innerHTML = `${firstName} ${lastName}`;
+
+      nameDiv.innerHTML = `${fullName}`;
     })
     .catch(error => console.log('There was a problem dawg!', error));
 }

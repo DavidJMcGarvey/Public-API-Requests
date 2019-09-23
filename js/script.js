@@ -7,10 +7,11 @@ function createCard(res) {
   const email = res.results[0].email;
   const homeCity = res.results[0].location.city;
   const homeState = res.results[0].location.state;
+  const profilePic = res.results[0].picture.large;
   card.className = 'card';
   card.innerHTML = `
                     <div class="card-img-container">
-                      <img class="card-img" src="https://placehold.it/90x90" alt="profile picture">
+                      <img class="card-img" src="${profilePic}" alt="profile picture">
                     </div>
                     <div class="card-info-container">
                       <h3 id="name" class="card-name cap">${fullName}</h3>
@@ -19,6 +20,7 @@ function createCard(res) {
                     </div>
                     `;
   document.querySelector('#gallery').append(card);
+  // console.log(res.results[0].picture.thumbnail);
 }
 
 
@@ -57,15 +59,10 @@ function createSearch() {
 }
 
 // Handle AJAX Request
-const nameList = [];
-
 for  (let i = 0; i < 12; i++) {
   fetch('https://randomuser.me/api/')
     .then(res => res.json())
-    .then(res => {
-      createCard(res);
-      // console.log(res.results[0].location.city)
-    })
+    .then(res => createCard(res))
     .catch(error => console.log('There was a problem dawg!', error));
 }
 

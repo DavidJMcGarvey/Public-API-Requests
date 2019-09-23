@@ -30,7 +30,7 @@ function createCard(res) {
 // ------------------------------------------
 //  Create Modal
 // ------------------------------------------
-function createModal(res) {
+function createModal() {
   const modal = document.createElement('div');
   const card = document.querySelector('#gallery');
   modal.className = 'modal-container';
@@ -69,28 +69,23 @@ function createSearch() {
 // ------------------------------------------
 //  Handle AJAX Request
 // ------------------------------------------
-// for  (let i = 0; i < 12; i++) {
   fetch('https://randomuser.me/api/?results=12')
     .then(res => res.json())
     .then(res => createCard(res))
     .catch(error => console.log('There was a problem dawg!', error))
-    .finally();
-// }
+    .finally(createSearch(), createModal());
 
 // ------------------------------------------
 //  Card and Modal Interactivity
 // ------------------------------------------
-
-
 // $('.modal-container').hide();
 
-// const card = document.getElementsByClassName('card');
-// card.addEventListener('click', () => console.log('Dave Dawg!!'));
+// const cards = document.getElementsByClassName('card');
+// cards.each(card => card.addEventListener('click', () => console.log('Dave Dawg!!')));
 
 $('.card').on('click', () => console.log('Dave Dawg!!'));
 
-// $('#modal-close-btn').on('click', () => {
-//   $('.modal-container').hide();
-// })
 
-createSearch()
+$('#modal-close-btn').on('click', () => {
+  $('.modal-container').hide();
+})

@@ -1,16 +1,16 @@
 // ------------------------------------------
 //  Create Card
 // ------------------------------------------
-function createCard(res) {
+function createCard(response) {
   for (let i = 0; i < 12; i++) {
     const card = document.createElement('div');
-    const firstName = res.results[i].name.first;
-    const lastName = res.results[i].name.last;
+    const firstName = response.results[i].name.first;
+    const lastName = response.results[i].name.last;
     const fullName = `${firstName} ${lastName}`;
-    const email = res.results[i].email;
-    const homeCity = res.results[i].location.city;
-    const homeState = res.results[i].location.state;
-    const profilePic = res.results[i].picture.large;
+    const email = response.results[i].email;
+    const homeCity = response.results[i].location.city;
+    const homeState = response.results[i].location.state;
+    const profilePic = response.results[i].picture.large;
     card.className = 'card';
     card.innerHTML = `
                       <div class="card-img-container">
@@ -24,7 +24,6 @@ function createCard(res) {
                       `;
     document.querySelector('#gallery').append(card);
   }
-
 }
 
 // ------------------------------------------
@@ -48,8 +47,12 @@ function createModal() {
                         <p class="modal-text">Birthday: 10/21/2015</p>
                       </div>
                     </div>
+                    <div class="modal-btn-container">
+                      <button type="button" id="modal-prev" class="modal-prev btn">Prev</button>
+                      <button type="button" id="modal-next" class="modal-next btn">Next</button>
+                    </div>
                     `;
-  card.append(modal);  // This is wrong, append somewhere else ??
+  card.append(modal);
 }
 
 // ------------------------------------------
@@ -69,22 +72,27 @@ function createSearch() {
 // ------------------------------------------
 //  Handle AJAX Request
 // ------------------------------------------
-  fetch('https://randomuser.me/api/?results=12')
-    .then(res => res.json())
-    .then(res => createCard(res))
-    .catch(error => console.log('There was a problem dawg!', error))
-    .finally(createSearch(), createModal());
+fetch('https://randomuser.me/api/?results=12')
+  .then(response => response.json())
+  .then(response => createCard(response), createModal())
+  .catch(error => console.log('There was a problem dawg!', error))
+  .finally(createSearch);
 
 // ------------------------------------------
 //  Card and Modal Interactivity
 // ------------------------------------------
-// $('.modal-container').hide();
+$('.modal-container').hide();
 
-// const cards = document.getElementsByClassName('card');
-// cards.each(card => card.addEventListener('click', () => console.log('Dave Dawg!!')));
+$('div.card').on('click', (e) => console.log(e.target)); // Click handler not working! Is it a async thing?
 
-$('.card').on('click', () => console.log('Dave Dawg!!'));
 
+$('#modal-prev').on('click', () => {
+  console.log('evaD!');
+})
+
+$('#modal-next').on('click', () => {
+  console.log('Dave!');
+})
 
 $('#modal-close-btn').on('click', () => {
   $('.modal-container').hide();

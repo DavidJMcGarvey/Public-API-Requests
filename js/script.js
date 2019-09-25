@@ -1,6 +1,7 @@
 // ------------------------------------------
 //  Create Card
 // ------------------------------------------
+// const currentEmployees = [];
 function createCard(response) {
   for (let i = 0; i < 12; i++) {
     const card = document.createElement('div');
@@ -24,6 +25,10 @@ function createCard(response) {
                       `;
     document.querySelector('#gallery').append(card);
   }
+  // for (let i = 0; i < 12; i++) {
+  //   const employee = response.results[i];
+  //   currentEmployees.push(employee);
+  // }
 }
 
 // ------------------------------------------
@@ -72,19 +77,36 @@ function createSearch() {
 // ------------------------------------------
 //  Handle AJAX Request
 // ------------------------------------------
-fetch('https://randomuser.me/api/?results=12')
-  .then(response => response.json())
-  .then(response => createCard(response), createModal())
-  .catch(error => console.log('There was a problem dawg!', error))
-  .finally(createSearch);
+function fetchData(url) {
+  fetch(url)
+    .then(checkStatus)
+    .then(response => response.json())
+    .then(createSearch())
+    .then(response => createCard(response))
+    .catch(error => console.log('There was a problem dawg!', error))
+    .finally(createModal());
+}
+
+function checkStatus(response) {
+  if (response.ok) {
+    return Promise.resolve(response);
+  } else {
+    return Promise.reject(Error(response.statusText));
+  }
+}
+
+fetchData('https://randomuser.me/api/?results=12');
 
 // ------------------------------------------
 //  Card and Modal Interactivity
 // ------------------------------------------
 $('.modal-container').hide();
 
-$('div.card').on('click', (e) => console.log(e.target)); // Click handler not working! Is it a async thing?
+$('#gallery').on('click', 'div.card', () => console.log('DAVE DAWG!!')); // Click handler WAS not working! Is it a async thing?
 
+$('#gallery').on('click', 'div.card', () => {
+  $('.modal-container').show();
+})
 
 $('#modal-prev').on('click', () => {
   console.log('evaD!');

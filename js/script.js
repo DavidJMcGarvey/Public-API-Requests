@@ -16,7 +16,7 @@ function createCard(response) {
     const profilePic = response.results[i].picture.large;
     const phone = response.results[i].phone;
     const birthday = response.results[i].dob.date;
-    const employeeAttr = { // attributes to be used on the Modal later: pic, name, email, city, phone, address, birthday
+    const employeeAttr = {
       'pic': profilePic,
       'name': fullName,
       'email': email,
@@ -38,11 +38,8 @@ function createCard(response) {
                       </div>
                       `;
     document.querySelector('#gallery').append(card);
-    // console.log(employeeAttr);
-    // $('.modal-container').hide();
     employeeList.push(employeeAttr);
   }
-  // console.log(employeeList);
 }
 
 // ------------------------------------------
@@ -77,7 +74,6 @@ function createModal() {
 
 function updateModal(modal, index) {
   const currentModal = document.querySelector('#davey-modal-container');
-  // console.log(currentModal[index].innerHTML);
   currentModal.innerHTML = `
                           <div class="modal">
                             <button type="button" id="modal-close-btn" class="modal-close-btn"><strong>X</strong></button>
@@ -114,29 +110,16 @@ function createSearch() {
 }
 
 // ------------------------------------------
-//  Handle AJAX Request
+//  Handle Fetch Request
 // ------------------------------------------
-// function fetchData(url) {
-//   fetch(url)
-//     .then(checkStatus)
-//     .then(response => response.json())
-//     .then(response => createCard(response))
-//     .then(createSearch())
-//     .catch(error => console.log('There was a problem dawg!', error))
-//     .finally(createModal());
-// }
-
 async function fetchData(url) {
   const response = await fetch(url);
+  checkStatus(response);
   const data = await response.json();
   createModal();
+  createSearch();
   createCard(data);
-  
   $('.modal-container').hide();
-  // const modals = data.results.map( person => updateModal(person, 0));
-  // console.log(modals);
-  // updateModal(data);
-  // console.log(data);
   return data;
 }
 
@@ -155,18 +138,14 @@ fetchData('https://randomuser.me/api/?results=12');
 // ------------------------------------------
 $('.modal-container').hide();
 
-// $('#gallery').on('click', 'div.card', () => console.log('DAVE DAWG!!')); // Click handler WAS not working! Is it a async thing?
-
 $('#gallery').on('click', 'div.card', (event) => {
   const thisCard = document.querySelectorAll('div.card');  
   const cardTarget = event.currentTarget;
-  // console.log(cardTarget.innerHTML);
-  // $('.modal-container').show();
   for (let i = 0; i < thisCard.length; i++) {
     if (thisCard[i].innerHTML === cardTarget.innerHTML) {
       updateModal(employeeList, i);
       $('.modal-container').show();
-      console.log(thisCard[i]);
+
       $('#modal-close-btn').on('click', () => {
         $('.modal-container').hide();
       })
@@ -174,14 +153,11 @@ $('#gallery').on('click', 'div.card', (event) => {
   }
 })
 
+// EXCEEDS => "prev" and "next" buttons
 $('#modal-prev').on('click', () => {
   console.log('evaD!');
 })
 
 $('#modal-next').on('click', () => {
   console.log('Dave!');
-})
-
-$('#modal-close-btn').on('click', () => {
-  $('.modal-container').hide();
 })

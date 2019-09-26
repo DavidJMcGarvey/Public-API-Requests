@@ -42,7 +42,7 @@ function createCard(response) {
     // $('.modal-container').hide();
     employeeList.push(employeeAttr);
   }
-  console.log(employeeList);
+  // console.log(employeeList);
 }
 
 // ------------------------------------------
@@ -52,6 +52,7 @@ function createModal() {
   const modal = document.createElement('div');
   const card = document.querySelector('#gallery');
   modal.className = 'modal-container';
+  modal.id = 'davey-modal-container';
   modal.innerHTML = `
                     <div class="modal">
                       <button type="button" id="modal-close-btn" class="modal-close-btn"><strong>X</strong></button>
@@ -75,9 +76,9 @@ function createModal() {
 }
 
 function updateModal(modal, index) {
-  const currentModal = document.querySelectorAll('.modal-container');
+  const currentModal = document.querySelector('#davey-modal-container');
   // console.log(currentModal[index].innerHTML);
-  currentModal[index].innerHTML = `
+  currentModal.innerHTML = `
                           <div class="modal">
                             <button type="button" id="modal-close-btn" class="modal-close-btn"><strong>X</strong></button>
                             <div class="modal-info-container">
@@ -115,14 +116,28 @@ function createSearch() {
 // ------------------------------------------
 //  Handle AJAX Request
 // ------------------------------------------
-function fetchData(url) {
-  fetch(url)
-    .then(checkStatus)
-    .then(response => response.json())
-    .then(response => createCard(response))
-    .then(createSearch())
-    .catch(error => console.log('There was a problem dawg!', error))
-    .finally(createModal());
+// function fetchData(url) {
+//   fetch(url)
+//     .then(checkStatus)
+//     .then(response => response.json())
+//     .then(response => createCard(response))
+//     .then(createSearch())
+//     .catch(error => console.log('There was a problem dawg!', error))
+//     .finally(createModal());
+// }
+
+async function fetchData(url) {
+  const response = await fetch(url);
+  const data = await response.json();
+  createModal();
+  createCard(data);
+  
+  $('.modal-container').hide();
+  // const modals = data.results.map( person => updateModal(person, 0));
+  // console.log(modals);
+  // updateModal(data);
+  // console.log(data);
+  return data;
 }
 
 function checkStatus(response) {
@@ -147,11 +162,14 @@ $('#gallery').on('click', 'div.card', (event) => {
   const cardTarget = event.currentTarget;
   // console.log(cardTarget.innerHTML);
   // $('.modal-container').show();
-  for (let i = 0; i < 12; i++) {
+  for (let i = 0; i < thisCard.length; i++) {
     if (thisCard[i].innerHTML === cardTarget.innerHTML) {
       updateModal(employeeList, i);
       $('.modal-container').show();
       console.log(thisCard[i]);
+      $('#modal-close-btn').on('click', () => {
+        $('.modal-container').hide();
+      })
     }
   }
 })

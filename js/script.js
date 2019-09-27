@@ -6,16 +6,16 @@ function createCard(response) {
   
   for (let i = 0; i < 12; i++) {
     const card = document.createElement('div');
-    const firstName = response.results[i].name.first;
-    const lastName = response.results[i].name.last;
-    const fullName = `${firstName} ${lastName}`;
+    const fullName = `${response.results[i].name.first} ${response.results[i].name.last}`;
     const email = response.results[i].email;
     const homeStreet = response.results[i].location.street;
     const homeCity = response.results[i].location.city;
     const homeState = response.results[i].location.state;
+    const homePostCode = response.results[i].location.postcode;
     const profilePic = response.results[i].picture.large;
     const phone = response.results[i].phone;
-    const birthday = response.results[i].dob.date;
+    const birthday = response.results[i].dob.date.slice(0,10);
+    console.log(birthday);
     const employeeAttr = {
       'pic': profilePic,
       'name': fullName,
@@ -23,6 +23,7 @@ function createCard(response) {
       'street': homeStreet,
       'city': homeCity,
       'state': homeState,
+      'zip': homePostCode,
       'phone': phone,
       'birthday': birthday
     };
@@ -60,8 +61,8 @@ function createModal() {
                         <p class="modal-text cap">city</p>
                         <hr>
                         <p class="modal-text">(555) 555-5555</p>
-                        <p class="modal-text">123 Portland Ave., Portland, OR 97204</p>
-                        <p class="modal-text">Birthday: 10/21/2015</p>
+                        <p class="modal-text">123 Northwest Ave., Bellingham, WA 97204</p>
+                        <p class="modal-text">Birthday: 01/07/1986</p>
                       </div>
                     </div>
                     <div class="modal-btn-container">
@@ -84,7 +85,7 @@ function updateModal(modal, index) {
                               <p class="modal-text cap">${modal[index].city}</p>
                               <hr>
                               <p class="modal-text">${modal[index].phone}</p>
-                              <p class="modal-text">${modal[index].street}, ${modal[index].city}, OR 97204</p>
+                              <p class="modal-text">${modal[index].street}, ${modal[index].city}, WA ${modal[index].zip}</p>
                               <p class="modal-text">Birthday: ${modal[index].birthday}</p>
                             </div>
                           </div>
@@ -131,7 +132,7 @@ function checkStatus(response) {
   }
 }
 
-fetchData('https://randomuser.me/api/?results=12');
+fetchData('https://randomuser.me/api/?results=12&nat=us');
 
 // ------------------------------------------
 //  Card and Modal Interactivity
@@ -149,15 +150,42 @@ $('#gallery').on('click', 'div.card', (event) => {
       $('#modal-close-btn').on('click', () => {
         $('.modal-container').hide();
       })
+
+      $('#modal-prev').on('click', () => {
+        if (i > 0) {
+          updateModal(employeeList, (i -= 1));
+        }
+      })
+      
+      $('#modal-next').on('click', () => {
+        if (i < 11) {
+          updateModal(employeeList, i += 1);
+        }
+      })
     }
+
+    
   }
 })
 
-// EXCEEDS => "prev" and "next" buttons
-$('#modal-prev').on('click', () => {
-  console.log('evaD!');
-})
+function btnFunctionality(index) {
+  $('#modal-prev').on('click', () => {
+    if (index > 0) {
+      updateModal(employeeList, index -= 1);
+    }
+  })
+  $('#modal-next').on('click', () => {
+    if (index < 11) {
+      updateModal(employeeList, index += 1);
+    }
+  })
+}
 
-$('#modal-next').on('click', () => {
-  console.log('Dave!');
-})
+// EXCEEDS => "prev" and "next" buttons
+// $('#modal-prev').on('click', () => {
+//   updateModal(employeeList, 11);
+// })
+
+// $('#modal-next').on('click', () => {
+//   console.log('Dave!');
+// })

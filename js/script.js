@@ -87,7 +87,7 @@ function updateModal(modal, index) {
                               <p class="modal-text cap">${modal[index].city}</p>
                               <hr>
                               <p class="modal-text cap">${modal[index].phone}</p>
-                              <p class="modal-text cap">${modal[index].street}, ${modal[index].city}, WA ${modal[index].zip}</p>
+                              <p class="modal-text cap">${modal[index].street}, ${modal[index].city}, ${modal[index].state} ${modal[index].zip}</p>
                               <p class="modal-text">Birthday: ${modal[index].birthday}</p>
                             </div>
                           </div>

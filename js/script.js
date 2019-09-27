@@ -39,6 +39,7 @@ function createCard(response) {
                         <p class="card-text cap">${homeCity}, ${homeState}</p>
                       </div>
                       `;
+    card.style.display = 'block';
     document.querySelector('#gallery').append(card);
     employeeList.push(employeeAttr);
   }
@@ -95,7 +96,7 @@ function updateModal(modal, index) {
                             <button type="button" id="modal-next" class="modal-next btn">Next</button>
                           </div>
                           `;
-  btnFunctionality(index);
+  btnToggleFunctionality(index);
 }
 
 // ------------------------------------------
@@ -107,12 +108,11 @@ function createSearch() {
   search.method = 'GET';
   search.innerHTML = `
                     <input type="search" id="search-input" class="search-input" placeholder="Search...">
-                    <input type="submit" value="&#x1F50D;" id="search-submit" class="search-submit">
+                    <input type="submit" value="&#x1F50D;" id="search-submit" class="search-submit" title="Search">
+                    <input type="submit" value="&#x21bb;" id="refresh" class="search-submit" title="Refresh">
                     `;
   document.querySelector('.search-container').append(search);
-  $('#search-input').on('keydown', () => {
-    console.log('Search Dave!!');
-  });
+  btnSearchFunctionality();
 }
 
 // ------------------------------------------
@@ -153,7 +153,7 @@ $('#gallery').on('click', 'div.card', (event) => {
   }
 })
 
-function btnFunctionality(index) {
+function btnToggleFunctionality(index) {
   $('#modal-close-btn').on('click', () => {
     $('.modal-container').hide();
   })
@@ -171,6 +171,25 @@ function btnFunctionality(index) {
   })
 }
 
-// $('#search-submit').on('keydown', () => {
-//   console.log('Search Dave!!');
-// });
+function btnSearchFunctionality() {
+  const $input = $('#search-input');
+  $('#search-submit').on('click', (e) => {
+
+    for (let i = 0; i < employeeList.length; i++) {
+      const cards = $('.card');
+ 
+      if (employeeList[i].name.includes($input[0].value.toLowerCase())) {
+        console.log('Dave!');
+        console.log(cards[i]);
+      } else {
+        cards[i].style.display = 'none';
+      }
+
+      $('#refresh').on('click', () => {
+        cards[i].style.display = 'block';
+      })
+    }
+  })
+  
+}
+

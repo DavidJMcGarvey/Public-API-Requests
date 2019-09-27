@@ -3,7 +3,6 @@
 // ------------------------------------------
 const employeeList = [];
 function createCard(response) {
-  
   for (let i = 0; i < 12; i++) {
     const card = document.createElement('div');
     const fullName = `${response.results[i].name.first} ${response.results[i].name.last}`;
@@ -14,8 +13,10 @@ function createCard(response) {
     const homePostCode = response.results[i].location.postcode;
     const profilePic = response.results[i].picture.large;
     const phone = response.results[i].phone;
-    const birthday = response.results[i].dob.date.slice(0,10);
-    console.log(birthday);
+    const birthdayYear = response.results[i].dob.date.slice(0,4);
+    const birthdayMonth = response.results[i].dob.date.slice(5,7);
+    const birthdayDay = response.results[i].dob.date.slice(8,10);
+    const birthdayFull = `${birthdayMonth}/${birthdayDay}/${birthdayYear}`;
     const employeeAttr = {
       'pic': profilePic,
       'name': fullName,
@@ -25,7 +26,7 @@ function createCard(response) {
       'state': homeState,
       'zip': homePostCode,
       'phone': phone,
-      'birthday': birthday
+      'birthday': birthdayFull
     };
     card.className = 'card';
     card.innerHTML = `
@@ -84,8 +85,8 @@ function updateModal(modal, index) {
                               <p class="modal-text">${modal[index].email}</p>
                               <p class="modal-text cap">${modal[index].city}</p>
                               <hr>
-                              <p class="modal-text">${modal[index].phone}</p>
-                              <p class="modal-text">${modal[index].street}, ${modal[index].city}, WA ${modal[index].zip}</p>
+                              <p class="modal-text cap">${modal[index].phone}</p>
+                              <p class="modal-text cap">${modal[index].street}, ${modal[index].city}, WA ${modal[index].zip}</p>
                               <p class="modal-text">Birthday: ${modal[index].birthday}</p>
                             </div>
                           </div>
@@ -94,6 +95,7 @@ function updateModal(modal, index) {
                             <button type="button" id="modal-next" class="modal-next btn">Next</button>
                           </div>
                           `;
+  btnFunctionality(index);
 }
 
 // ------------------------------------------
@@ -105,7 +107,7 @@ function createSearch() {
   search.method = 'GET';
   search.innerHTML = `
                     <input type="search" id="search-input" class="search-input" placeholder="Search...">
-                    <input type="submit" value="&#x1F50D;" id="serach-submit" class="search-submit">
+                    <input type="submit" value="&#x1F50D;" id="search-submit" class="search-submit">
                     `;
   document.querySelector('.search-container').append(search);
 }
@@ -137,8 +139,6 @@ fetchData('https://randomuser.me/api/?results=12&nat=us');
 // ------------------------------------------
 //  Card and Modal Interactivity
 // ------------------------------------------
-$('.modal-container').hide();
-
 $('#gallery').on('click', 'div.card', (event) => {
   const thisCard = document.querySelectorAll('div.card');  
   const cardTarget = event.currentTarget;
@@ -146,46 +146,28 @@ $('#gallery').on('click', 'div.card', (event) => {
     if (thisCard[i].innerHTML === cardTarget.innerHTML) {
       updateModal(employeeList, i);
       $('.modal-container').show();
-
-      $('#modal-close-btn').on('click', () => {
-        $('.modal-container').hide();
-      })
-
-      $('#modal-prev').on('click', () => {
-        if (i > 0) {
-          updateModal(employeeList, (i -= 1));
-        }
-      })
-      
-      $('#modal-next').on('click', () => {
-        if (i < 11) {
-          updateModal(employeeList, i += 1);
-        }
-      })
     }
-
-    
   }
 })
 
 function btnFunctionality(index) {
-  $('#modal-prev').on('click', () => {
+  $('#modal-close-btn').on('click', () => {
+    $('.modal-container').hide();
+  })
+
+  $('.modal-prev').on('click', () => {
     if (index > 0) {
       updateModal(employeeList, index -= 1);
     }
   })
-  $('#modal-next').on('click', () => {
+
+  $('.modal-next').on('click', () => {
     if (index < 11) {
       updateModal(employeeList, index += 1);
     }
   })
 }
 
-// EXCEEDS => "prev" and "next" buttons
-// $('#modal-prev').on('click', () => {
-//   updateModal(employeeList, 11);
-// })
-
-// $('#modal-next').on('click', () => {
-//   console.log('Dave!');
-// })
+$('#search-submit').on('keydown', () => {
+  console.log('Search Dave!!');
+});

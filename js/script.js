@@ -110,6 +110,9 @@ function createSearch() {
                     <input type="submit" value="&#x1F50D;" id="search-submit" class="search-submit">
                     `;
   document.querySelector('.search-container').append(search);
+  $('#search-input').on('keydown', () => {
+    console.log('Search Dave!!');
+  });
 }
 
 // ------------------------------------------
@@ -168,6 +171,6 @@ function btnFunctionality(index) {
   })
 }
 
-$('#search-submit').on('keydown', () => {
-  console.log('Search Dave!!');
-});
+// $('#search-submit').on('keydown', () => {
+//   console.log('Search Dave!!');
+// });

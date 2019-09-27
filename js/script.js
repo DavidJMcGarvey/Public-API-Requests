@@ -119,14 +119,22 @@ function createSearch() {
 //  Handle Fetch Request
 // ------------------------------------------
 async function fetchData(url) {
-  const response = await fetch(url);
-  checkStatus(response);
-  const data = await response.json();
-  createModal();
-  createSearch();
-  createCard(data);
-  $('.modal-container').hide();
-  return data;
+  try {
+    const response = await fetch(url);
+    checkStatus(response);
+    const data = await response.json();
+    createModal();
+    createSearch();
+    createCard(data);
+    $('.modal-container').hide();
+    return data;
+  } catch {
+    const $gallery = $('#gallery');
+    $gallery.innerHTML = `
+                          <h1>Whoopsie Daisy! Something went wrong, try reloading the page.</h1>
+                        `;
+  }
+
 }
 
 function checkStatus(response) {

@@ -16,7 +16,11 @@ html, body {
 body {
     font-family: "Nunito", sans-serif;
     text-align: center;
-    background: rgba(235, 235, 235, 0.9);
+    /* Original */
+    /* background: rgba(235, 235, 235, 0.9); */
+    /* EXCEEDS */
+    background: #B8D8D8;
+    /* ------ */
 }
 
 header {
@@ -87,7 +91,11 @@ header h1 {
     max-width: 360px;
     margin: 10px 10px 20px;
     padding: 10px;
-    background: rgba(245, 245, 245, 0.9);
+    /* Original */
+    /* background: rgba(245, 245, 245, 0.9); */
+    /* EXCEEDS */
+    background:rgb(157, 206, 206);
+    /* ------ */
     border-radius: 0.25em;
     border: 1px solid rgba(50, 50, 50, 0.3);
     transition: .4s ease-out;
@@ -98,6 +106,9 @@ header h1 {
     width: 95px;
     margin: 10px 15px auto 10px;
     border-radius: 50%;
+    /* EXCEEDS */
+    border: solid 2px;
+    border-color: #FE5F55;
 }
 
 .card-info-container {
@@ -140,7 +151,11 @@ header h1 {
     min-height: 415px;
     margin: 10px auto auto;
     padding-bottom: 15px;
-    background: rgba(255, 255, 255, 1);
+    /* Original */
+    /* background: rgba(255, 255, 255, 1); */
+    /* EXCEEDS */
+    background: #E4E3DF;
+    /* ------ */
     border-radius: 0.25em;
     border: 1px solid rgba(100, 100, 100, 0.3);
     transition: .4s ease-out;
@@ -162,6 +177,9 @@ header h1 {
     width: 150px;
     margin-top: 35px;
     border-radius: 50%;
+    /* EXCEEDS */
+    border: solid 2px;
+    border-color: #FE5F55;
 }
 
 .modal-name {
@@ -188,7 +206,11 @@ header h1 {
     max-width: 420px;
     padding: 10px 15px 15px;;
     margin: 10px auto auto;
-    background: rgba(255, 255, 255, 1);
+    /* Original */
+    /* background: rgba(255, 255, 255, 1); */
+    /* EXCEEDS */
+    background: #E4E3DF;
+    /* ------ */
     border-radius: 0.25em;
     border: 1px solid rgba(100, 100, 100, 0.3);
 }

@@ -182,18 +182,18 @@ function btnToggleFunctionality(index) {
 function btnSearchFunctionality() {
   const $input = $('#search-input');
   $('#search-submit').on('click', (e) => {
-
+    e.preventDefault();
     for (let i = 0; i < employeeList.length; i++) {
       const cards = $('.card');
- 
+
       if (employeeList[i].name.includes($input[0].value.toLowerCase())) {
-        console.log('Dave!');
-        console.log(cards[i]);
+        cards[i].style.display = 'block';
       } else {
         cards[i].style.display = 'none';
       }
 
-      $('#refresh').on('click', () => {
+      $('#refresh').on('click', (e) => {
+        e.preventDefault();
         cards[i].style.display = 'block';
       })
     }

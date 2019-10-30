@@ -19,7 +19,7 @@ function createCard(response) {
     const birthdayFull = `${birthdayMonth}/${birthdayDay}/${birthdayYear}`;
     const employeeAttr = {
       'pic': profilePic,
-      'name': fullName,
+      'name': fullName.toLowerCase(),
       'email': email,
       'street': homeStreet,
       'city': homeCity,

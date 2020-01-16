@@ -1,9 +1,10 @@
-Full Stack JavaScript Techdegree Project 5
 -------------------------------------------
 ###         Public API Requests         ###
 -------------------------------------------
 
-Welcome to the Public API Requests Sudo-Start-Up Employee Web App where you come for the randomly generatored eployee data, but you stay for the fact that it was pulled for the web and handled asynchronously! 
+Welcome to the Public API Requests Sudo-Start-Up Employee Web App where you come for the randomly generatored eployee data, but you stay for the fact that it was pulled for the web and handled asynchronously!
+
+*Application Description and Goals:* 
 
 **BASIC FEATURES**
 
@@ -17,7 +18,18 @@ Once a modal has popped up with infomation on an employee, the user can cycle th
 - Style and Structure
 Adding upon the supplied project file's CSS, I added some CSS of my own. I added a two tones a light blue to the background and cards. There is also red/orange border added to the profile images on both the card and modal. The modal has a subtly silvery blue for a background. 
 
+*Technologies:*
 
-Author: David J McGarvey
-Created: 2019-09-23
-Updated: 2019-09-27
+1. JavaScript
+2. Public API
+3. Async/Await
+
+*Screenshots:*
+![img](https://user-images.githubusercontent.com/42125523/72556600-d417ec00-3853-11ea-9872-36a487abb11d.png)
+![img](https://user-images.githubusercontent.com/42125523/72556671-f3af1480-3853-11ea-9543-8c70eca7e4ad.png)
+![img](https://user-images.githubusercontent.com/42125523/72556672-f447ab00-3853-11ea-910b-4adf83e7d330.png)
+![img](https://user-images.githubusercontent.com/42125523/72556673-f447ab00-3853-11ea-9688-97ca9e852bbc.png)
+
+Author: David J McGarvey  
+Created: 2019-09-23  
+Updated: 2020-01-16  
